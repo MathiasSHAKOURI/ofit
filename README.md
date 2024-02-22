@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/MathiasSHAKOURI/ofit/assets/122030473/f700e7c5-3ee9-4069-9510-a70b52bcc5c4" />
+  <img src="https://github.com/MathiasSHAKOURI/ofit/assets/122030473/8a49f382-cda3-4254-af03-f5c55a00eeed" />
 </p>
 
 # OFIT - Santé et Sport
