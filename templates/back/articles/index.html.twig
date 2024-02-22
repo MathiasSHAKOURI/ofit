@@ -1,0 +1,60 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Articles Index{% endblock %}
+
+{% block body %}
+    <h1>Articles</h1>
+    <a href="{{ path('app_back_article_new') }}" class="btn btn-outline-secondary bg-gradient mb-2">Create new</a>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <a href="{{ path('app_back_article_index') }}" class="btn btn-outline-success bg-gradient mr-2 {{ app.request.attributes.get('category') is null ? 'active' : '' }}">Tous les Articles</a>
+            {% for articleCategory in articleCategories %}
+                <a href="{{ path('app_back_article_index_category', {'category': articleCategory.label|lower}) }}" class="btn btn-outline-primary bg-gradient mr-2 {{ app.request.attributes.get('category') == articleCategory.label|lower ? 'active' : '' }}">{{ articleCategory.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>User</th>
+                        <th>Category</th>
+                        <th>Content</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Published at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in articles %}
+                        <tr>
+                        <td>{{ article.title }}</td>
+                        <th>{{ article.user ? article.user.firstname ~ ' ' ~ article.user.lastname : "Un Coach" }}</th>
+                        <th>{{ article.articleCategory.label }}</th>
+                        <td>{{ article.content|slice(0,100) }}...</td>
+                        <td>{{ article.createdAt|date('d-m-Y') }}</td>
+                        <td>{{ article.updatedAt ? article.updatedAt|date('d-m-Y') : 'N/A' }}</td>
+                        <td>{{ article.publishedAt|date('d-m-Y') }}</td>
+                        <td>
+                            {% if is_granted("ARTICLE_EDIT",article) %}
+                                <a href="{{ path('app_back_article_edit', {'id': article.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            {% endif %}
+                            <a href="{{ path('app_back_article_show', {'id': article.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/articles/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

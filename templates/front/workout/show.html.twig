@@ -1,0 +1,69 @@
+{% extends "front/base.html.twig" %}
+{% block title %}{{ workout.title }}{% endblock %}
+{% block body %}
+    <div class="d-flex align-items-center">
+        <a class="d-none d-lg-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+        <h1 class="mx-auto">{{ workout.title }}</h1>
+    </div>
+    <a class="d-lg-none d-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+
+    <div class="d-flex flex-wrap mt-3">
+        <span class="badge rounded-pill text-bg-success me-4 mb-3">{{ workout.workoutcategory.label }}</span>
+        <span class="badge rounded-pill text-bg-success me-4 mb-3">{{ workout.duration }} min</span>
+        <span class="badge rounded-pill text-bg-success me-4 mb-3">
+            {% if workout.user is null %}
+                Un coach
+            {% else %}
+                {{ workout.user.pseudo }}
+            {% endif %}
+        </span>
+    </div>
+    <!-- Affichage float sur ecran taille a partir de lg et plus -->
+    <div class="clearfix d-none d-lg-block">
+        <div class="float-lg-start me-4 mb-3" style="max-width: 45%;">
+            <img src="{{ workout.picture }}" alt="Illustration de {{ workout.title }}" class="object-fit-cover w-100 rounded" style="max-height: 400px">
+        </div>
+        <p class="justify">{{ workout.description }}</p>
+    </div>
+    <!-- Affichage colonne sur ecran taille en dessous de lg -->
+    <div class="d-lg-none d-block">
+        <div class="mb-3 mx-auto" style="max-width: 100%;">
+            <img src="{{ workout.picture }}" alt="Illustration de {{ workout.title }}" class="object-fit-cover w-100 rounded" style="max-height: 400px">
+        </div>
+        <p class="justify">{{ workout.description }}</p>
+    </div>
+    <h2 class="my-3">Exercices :</h2>
+    <p>Temps de repos entre chaque exercice : {{ workout.restBetween|date('i:s') }} min</p>
+    <div class="row">
+        {% for exercice in workout.workoutParameters %}
+            <div class="col-lg-6">
+                <div class="card mb-3">
+                    <a href="{{ path('app_exercice_show', {id:exercice.exercice.id,slug:exercice.exercice.slug }) }}" class="text-reset text-decoration-none">
+                        <div class="row g-0">
+                            <div class="col-xl-4 rounded-top overflow-hidden position-relative">
+                                <img src="{{ exercice.exercice.picture }}" class="object-fit-cover w-100 md-position-absolute md-top-50 md-start-50 md-translate-middle" alt="Illustration {{ exercice.exercice.title }}" style="height: 230px;">
+                            </div>
+                            <div class="col-xl-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ exercice.exercice.title }}</h5>
+                                    <div class="d-flex flex-wrap">
+                                        {% if exercice.reps is null %}
+                                        <span class="badge rounded-pill text-bg-warning me-2 mb-4">{{ exercice.duration }} sec</span>                                        
+                                        {% else %}
+                                        <span class="badge rounded-pill text-bg-warning me-2 mb-4">{{ exercice.reps }} répétitions</span>                                        
+                                        {% endif %}
+                                        <span class="badge rounded-pill text-bg-warning me-2 mb-4">{{ exercice.sets }} séries</span>
+                                        <span class="badge rounded-pill text-bg-warning me-2 mb-4">Repos : {{ exercice.rest }} sec</span>
+                                    </div>
+                                    <p class="card-text ellipsis-4">{{ exercice.exercice.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "front/base.html.twig" %}
+{% block title %}{{ musculargroup != "all" ? musculargroup|capitalize  : "Exercices" }}{% endblock %}
+{% block body %}
+    <div class="position-relative">
+        <h1 class="mt-3 text-center" id="exercieTitle">Les exercices</h1>
+        <button class="ms-3 position-absolute top-50 start-0 translate-middle btn btn-danger d-none" type="button" id="resetExerciceFilter"><i class="bi bi-x-square-fill"></i></button>
+    </div>
+    <div class="d-none" id="exerciceMessage"></div>
+    <!-- Les groupes musculaires -->
+    <div class="row"  id="mgfilter">
+        <div class="col-md-6 text-center overflow-hidden">
+            {% include "front/partials/_bodyFront.html.twig" %}
+        </div>
+        <div class="col-md-6 text-center overflow-hidden">
+            {% include "front/partials/_bodyBack.html.twig" %}
+        </div>
+    </div>
+    <input type="hidden" id="muscularGroup" value="{{ musculargroup }}">
+    <div class="row my-3" id="exerciceListContainer"></div>
+    <div class="d-flex justify-content-center" id="paginationContainer"></div>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('js/exerciceApi.js') }}"></script>
+{% endblock %}

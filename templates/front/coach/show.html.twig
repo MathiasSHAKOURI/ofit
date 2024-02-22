@@ -1,0 +1,73 @@
+{% extends "front/base.html.twig" %}
+{% block title %}{{ coach.pseudo }}{% endblock %}
+{% block body %}
+    <div class="d-flex align-items-center">
+        <a class="d-none d-lg-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+        <h1 class="mx-auto">{{ coach.firstname }} {{ coach.lastname }}</h1>
+    </div>
+    <a class="d-lg-none d-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+    <div class="text-end">
+        <span class="badge rounded-pill text-bg-success mb-4"></span>
+    </div>
+    <div class="clearfix d-none d-lg-block mt-4">
+        <div class="float-start me-4 mb-3" style="width: 45%;">
+            <img src="{{ coach.picture }}" alt="Photo de {{ coach.firstname }}" class="object-fit-cover w-100 rounded" style="max-height: 500px">
+        </div>
+        <p class="justify">{{ coach.presentation }}</p>
+    </div>
+    <!-- Affichage colonne sur ecran taille en dessous de lg -->
+    <div class="d-lg-none d-block">
+        <div class="mb-3 mx-auto" style="max-width: 100%%;">
+            <img src="{{ coach.picture }}" alt="Photo de {{ coach.firstname }}" class="object-fit-cover w-100 rounded" style="max-height: 700px">
+        </div>
+        <p class="justify">{{ coach.presentation }}</p>
+    </div>
+    <!--- Section articles -->
+    {% if articlesNutrition is empty and articlesSante is empty and articlesSport is  empty %}
+    {% else %}
+        <div class="mt-2">
+            <h2>Mes articles :</h2>
+            {% if articlesNutrition is not empty %}
+                <h3>Nutrition</h3>
+                <div class="row">
+                    {% for article in articlesNutrition %}
+                        <div class="col-md-6 col-xl-4 mb-4">
+                            {% include "front/partials/_articleCard.html.twig" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if articlesSante is not empty %}
+                <h3>Santé</h3>
+                <div class="row">
+                    {% for article in articlesSante %}
+                        <div class="col-md-6 col-xl-4 mb-4">
+                            {% include "front/partials/_articleCard.html.twig" %}
+                        </div>                        
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if articlesSport is not empty %}
+                <h3>Sport</h3>  
+                <div class="row">
+                    {% for article in articlesSport %}
+                        <div class="col-md-6 col-xl-4 mb-4">
+                            {% include "front/partials/_articleCard.html.twig" %}
+                        </div>   
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <!--- Section Programmes -->
+    {% if workouts is not empty %}
+        <div class="mt-4">
+            <h2 class="mb-3">Mes programmes :</h2>
+            {% for workout in workouts %}
+                <div class="mb-4">
+                    {% include "front/partials/_workoutCard.html.twig" %}
+                </div>   
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

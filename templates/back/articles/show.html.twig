@@ -1,0 +1,64 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>User</th>
+                <td>{{ article.user.firstname ~ ' ' ~ article.user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>
+                    {% if article.picture %}
+                        <div class="position-relative" style="width: 800px; height: 400px">
+                            <img src="{{ article.picture }}" alt="{{ article.title }}" class="position-absolute h-100 top-50 start-50 translate-middle object-fit-cover">
+                        </div>
+                    {% else %}
+                        No picture available
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>Created At</th>
+                <td>{{ article.publishedAt|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Updated At</th>
+                <td>{{ article.updatedAt ? article.updatedAt|date('d-m-Y') : 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Published At</th>
+                <td>{{ article.publishedAt|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ article.articleCategory.label }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-secondary bg-gradient my-2" href="{{ path('app_back_article_index') }}">back to list</a>
+
+    {% if is_granted("ARTICLE_DELETE",article) %}
+        <a class="btn btn-outline-primary bg-gradient" href="{{ path('app_back_article_edit', {'id': article.id}) }}">edit</a>
+    {% endif %}
+
+    {{ include('back/articles/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Coachs Index{% endblock %}
+
+{% block body %}
+    <h1>Coachs</h1>
+    <a href="{{ path('app_back_coach_new') }}" class="btn btn-outline-secondary bg-gradient ml-auto">Create new</a>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Pseudo</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        {% set emailDomain = user.email|split('@')[1] %}
+                        {% if emailDomain == 'ofit.com' and user.email != 'admin@ofit.com' %}
+                            <tr>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.pseudo }}</td>
+                                <td>{{ user.firstname }}</td>
+                                <td>{{ user.lastname }}</td>
+                                <td>
+                                    <a href="{{ path('app_back_coach_edit', {'id': user.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                                    <a href="{{ path('app_back_coach_show', {'id': user.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                                    {{ include('back/coachs/_delete_form.html.twig') }}
+                                </td>                            
+
+                            </tr>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5">No coaches found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

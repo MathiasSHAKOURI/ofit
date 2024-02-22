@@ -1,0 +1,15 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Edit Articles{% endblock %}
+
+{% block body %}
+    <h1>Edit Articles</h1>
+
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+    {{ include('back/articles/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-outline-secondary bg-gradient my-2" href="{{ path('app_back_article_index') }}">back to list</a>
+
+    {{ include('back/articles/_delete_form.html.twig') }}
+{% endblock %}

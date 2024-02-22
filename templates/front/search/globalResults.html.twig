@@ -1,0 +1,63 @@
+{% extends "front/base.html.twig" %}
+{% block title %}Résultat de la recherche{% endblock %}
+{% block body %}
+    <h1 class="mx-auto text-center">Résultat de la recherche pour : {{ userInput }}</h1>
+
+    <!-- Resultats pour les articles -->
+    {% if articles is not empty %}
+        <div class="mt-2">
+            <h2>Les articles :</h2>
+            <div class="row">
+                {% for article in articles %}
+                    <div class="col-md-6 col-xl-4 mb-4">
+                        {% include "front/partials/_articleCard.html.twig" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les coachs -->
+    {% if coachs is not empty %}
+        <div class="mt-2">
+            <h2>Les coachs :</h2>
+            <div class="row">
+                {% for coach in coachs %}
+                    <div class="col-md-6 col-xl-4 mb-4">
+                        {% include "front/partials/_coachCard.html.twig" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les exercices -->
+    {% if exercices is not empty %}
+        <div class="mt-2">
+            <h2>Les exercices :</h2>
+            <div class="row">
+                {% for exercice in exercices %}
+                    <div class="col-md-6 mb-5">
+                        {% include "front/partials/_exerciceCard.html.twig" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les programmes -->
+    {% if workouts is not empty %}
+        <div class="mt-2">
+            <h2>Les programmes :</h2>
+            <div class="row">
+                {% for workout in workouts %}
+                    <div class="mb-5">
+                        {% include "front/partials/_workoutCard.html.twig" %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+

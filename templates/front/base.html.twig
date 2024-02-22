@@ -1,0 +1,125 @@
+<!-- Header -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awsome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Our custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/ofit.css') }}">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
+
+    <title>O'fit - {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <!-- Nav -->
+    {% block nav %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path ('app_home') }}"><img src="{{ asset('images/logo.png') }}" height="40" alt="Logo O'Fit" class="my-auto"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if app.request.get('_route') == "app_home" %}active{% endif %}" aria-current="page" href="{{ path ('app_home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mx-3 {% if app.request.get('_route')|slice(-7) == "article" %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Articles
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {% if category is defined and category == "Nutrition" %}active{% endif %}" href="{{ path ('app_nutrition_article') }}">Nutrition</a></li>
+                            <li><a class="dropdown-item {% if category is defined and category == "Sport" %}active{% endif %}" href="{{ path ('app_sport_article') }}">Sport</a></li>
+                            <li><a class="dropdown-item {% if category is defined and category == "Santé" %}active{% endif %}" href="{{ path ('app_santé_article') }}">Santé</a></li>
+                        </ul>
+                    </li>
+                    {# <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if category is defined and category == "Nutrition" %}active{% endif %}" aria-current="page" href="{{ path ('app_nutrition_article') }}">Articles Nutrition</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if category is defined and category == "Sport" %}active{% endif %}" aria-current="page" href="{{ path ('app_sport_article') }}">Articles Sport</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if category is defined and category == "Santé" %}active{% endif %}" aria-current="page" href="{{ path ('app_santé_article') }}">Articles Santé</a>
+                    </li> #}
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if (app.request.get('_route')[:12]) == "app_exercice" %}active{% endif %}" aria-current="page" href="{{ path ('app_exercices') }}">Exercices</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if (app.request.get('_route')[:11]) == "app_workout" %}active{% endif %}" aria-current="page" href="{{ path ('app_workout') }}">Programmes</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if (app.request.get('_route')[:9]) == "app_coach" %}active{% endif %}" aria-current="page" href="{{ path ('app_coach') }}">Coachs</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 {% if (app.request.get('_route')[:14]) == "app_front_user" %}active{% endif %}" aria-current="page" href="{{ path ('app_front_user_login') }}">Mon Compte</a>
+                    </li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item my-auto">
+                        <a class="nav-link mx-3 bi bi-power" aria-current="page" href="{{ path ('app_front_user_logout') }}">Déconnexion</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form method="GET" action="{{ path('app_search_results_global') }}">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Rechercher" aria-label="Search" name="globalSearch" id="globalSearch" value="{{ userInput is defined ? userInput}}">
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    <div class="container" style="min-height: calc(100vh - 199px);">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <div class="sticky-bottom text-end fs-1 ">
+        <a class="text-reset me-2" href="" id="goTopButton"><i class="bi bi-arrow-up-circle-fill"></i></a>
+    </div>
+
+    <!-- Footer -->
+    {% block footer %}
+    <footer class="py-2 border-top bg-light">
+        <div class="container row text-center mx-auto">
+            <div class="col-1 p-0 text-start">
+                <img src="{{ asset('images/logo.png') }}" height="40" alt="Logo O'Fit" class="my-auto">
+            </div>
+            <div class="col-11 fs-6 my-auto">
+                <a class="mx-3 text-reset text-decoration-none" href="#">À PROPOS</a>
+                <a class="mx-3 text-reset text-decoration-none" href="#">CONDITIONS GÉNÉRALES</a>
+                <a class="mx-3 text-reset text-decoration-none" href="#">UTILISATION DES COOKIES</a>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/popper.js') }}"></script>
+
+    <!-- Bouton de retour en haut de la page -->
+        <script src="{{ asset('js/app.js') }}"></script>
+
+    {% block script %}{% endblock %}
+</body>
+</html>

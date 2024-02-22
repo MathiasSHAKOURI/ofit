@@ -1,0 +1,49 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Exercices index{% endblock %}
+
+{% block body %}
+    <h1>Exercices</h1>
+    <a href="{{ path('app_back_exercice_new') }}" class="btn btn-outline-secondary bg-gradient mb-2">Create new</a>
+
+        <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <a href="{{ path('app_back_exercice_index') }}" class="btn btn-outline-success bg-gradient mr-2 mb-2 {{ app.request.attributes.get('muscularGroup') is null ? 'active' : '' }}">Tous les Exercices</a>
+            {% for muscularGroup in muscularGroups %}
+                <a href="{{ path('app_back_exercice_index_muscularGroup', {'muscularGroup': muscularGroup.label|lower }) }}" class="btn btn-outline-primary bg-gradient mr-2 mb-2 {{ app.request.attributes.get('muscularGroup') == muscularGroup.label|lower ? 'active' : '' }}">{{ muscularGroup.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Groupe musculaire</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exercice in exercices %}
+                        <tr>
+                        <td>{{ exercice.title }}</td>
+                        <td>{{ exercice.description|slice(0,100) }}...</td>
+                        <td>{{ exercice.muscularGroup.label }}</td>
+                        <td>
+                            <a href="{{ path('app_back_exercice_edit', {'id': exercice.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            <a href="{{ path('app_back_exercice_show', {'id': exercice.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/exercices/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

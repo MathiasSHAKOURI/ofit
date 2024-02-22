@@ -1,0 +1,46 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Exercice{% endblock %}
+
+{% block body %}
+    <h1>Exercice</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ exercice.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ exercice.title }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>
+                    {% if exercice.picture %}
+                        <div class="position-relative" style="width: 800px; height: 400px">
+                            <img src="{{ exercice.picture }}" alt="{{ exercice.title }}" class="position-absolute h-100 top-50 start-50 translate-middle object-fit-cover">
+                        </div>
+                    {% else %}
+                        No picture available
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ exercice.description }}</td>
+            </tr>
+            <tr>
+                <th>Groupe musculaire</th>
+                <td>{{ exercice.muscularGroup.label }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-secondary bg-gradient my-2" href="{{ path('app_back_exercice_index') }}">back to list</a>
+
+    <a class="btn btn-outline-primary bg-gradient" href="{{ path('app_back_exercice_edit', {'id': exercice.id}) }}">edit</a>
+
+    {{ include('back/exercices/_delete_form.html.twig') }}
+{% endblock %}

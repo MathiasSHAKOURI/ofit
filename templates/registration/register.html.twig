@@ -1,0 +1,33 @@
+{% extends "front/base.html.twig" %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+
+<div class="container w-50 mt-5">
+    <h1 class="text-center">Créer votre compte Ofit</h1>
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.password) }}
+            {{ form_row(registrationForm.firstname) }}
+            {{ form_row(registrationForm.lastname) }}
+            {{ form_row(registrationForm.captcha, {
+                label: 'Recopier le code visuel*'
+            }) }}
+            {{ form_row(registrationForm.agreeTerms, {
+                label: 'Accepter les conditions*'
+            }) }}
+    
+            <button type="submit" class="btn btn-outline-success bg-gradient container">Suivant</button>
+        {{ form_end(registrationForm) }}
+
+        <p class="mt-2">Vous avez déjà un compte ? <a href="{{ path ('app_front_user_login') }}">Se connecter</a></p>
+</div>
+
+{% endblock %}

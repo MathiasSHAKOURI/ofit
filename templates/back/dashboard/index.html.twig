@@ -1,0 +1,48 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Tableau de Bord{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Tableau de Bord</h2>
+        <div class="row mt-4">
+
+            {% for articleCategory in articlesCategories %}
+                <div class="col-md-4">
+                    <a href="{{ path('app_back_article_index_category', {'category': articleCategory.label|lower }) }}" style="text-decoration:  none; color: inherit;">
+                        <div class="card" style="cursor: pointer;height: 150px;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Articles de {{ articleCategory.label }}</h5>
+                                <p class="card-text">Publiés: {{ articlesCountPublished[articleCategory.label]|default(0) }}</p>
+                                <p class="card-text">A Venir: {{ articlesCountToPublish[articleCategory.label]|default(0) }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+            <div class="row mt-4">
+            <div class="col-md-6">
+                <a href="{{ path('app_back_exercice_index') }}" style="text-decoration: none; color: inherit;">
+                    <div class="card" style="cursor: pointer;height: 150px;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Exercices</h5>
+                            <p class="card-text">Total: {{ exercicesCount }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ path('app_back_workoutProgram_index') }}" style="text-decoration: none; color: inherit;">
+                    <div class="card" style="cursor: pointer;height: 150px;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Programmes</h5>
+                            <p class="card-text">Publiés: {{ workoutProgramsCountPublished|default(0) }}</p>
+                            <p class="card-text">A Venir: {{ workoutProgramsCountToPublish|default(0) }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

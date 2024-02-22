@@ -1,0 +1,15 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Edit Workout Programs{% endblock %}
+
+{% block body %}
+    <h1>Edit Workout Programs</h1>
+
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+    {{ include('back/workoutPrograms/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_back_workoutProgram_index') }}" class="btn btn-outline-secondary bg-gradient my-2">back to list</a>
+
+    {{ include('back/workoutPrograms/_delete_form.html.twig') }}
+{% endblock %}

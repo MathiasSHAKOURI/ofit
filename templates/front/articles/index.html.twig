@@ -1,0 +1,25 @@
+{% extends "front/base.html.twig" %}
+{% block title %}Articles {{ category|lower }} {% endblock %}
+{% block body %}
+    <div class="mt-3 text-center">
+        <h1>{{ category }}</h1>
+    </div>
+
+    <!-- Les filtres -->
+    <div class="my-4 d-flex col-md-6">
+        <select class="form-select form-select-sm mx-2" name="id" id="idSelect">
+            <option value="">Auteur</option>
+            {% for coach in coachs %}
+                <option value="{{ coach.id }}">{{ coach.pseudo }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-danger d-none" type="button" id="resetFilter"><i class="bi bi-x-square-fill"></i></button>
+    </div>
+    <input type="hidden" id="category" value="{{ category }}">
+    <div class="row my-3" id="articleListContainer"></div>
+    <div class="d-none" id="articleMessage"></div>
+    <div class="d-flex justify-content-center" id="paginationContainer"></div>
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('js/articlesApi.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+<div class="card my-3" style="min-height: 450px;">
+    <a href="{{ path('app_coach_show', {id:coach.id, firstname:coach.firstname }) }}">
+        <img src="{{ coach.picture }}" class="card-img-top object-fit-cover"  alt="Image de profile de {{ coach.firstname}} {{ coach.lastname}}" style="height: 200px;">
+    </a>
+    <div class="card-body">
+        <h5 class="card-title">{{ coach.firstname }} {{ coach.lastname }}</h5>
+        <p class="card-text mx-2 ellipsis-4">{{ coach.presentation }}</p>
+    </div>
+    <div class="card-footer text-end">
+        <a class="text-reset" href="{{ path('app_coach_show', {id:coach.id, firstname:coach.firstname }) }}"><i class="fa-solid fa-up-right-from-square "></i></a>
+    </div>
+</div>

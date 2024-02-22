@@ -1,0 +1,97 @@
+/* font-family: 'Cabin', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Raleway', sans-serif;
+ */
+
+body{
+    font-family: 'Raleway', sans-serif;
+}
+
+h1{
+    font-size: 3rem;
+}
+
+.ofit{
+    font-family: 'Young Serif';
+}
+
+svg path.active.hovered{
+    fill: red;
+    cursor: pointer;
+}
+
+svg path.selected{
+    fill: red;
+}
+
+.ellipsis-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Nombre de lignes avant de couper le texte */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.ellipsis-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Nombre de lignes avant de couper le texte */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.justify{
+    text-align: justify;
+}
+
+ul li.list-item-icon{
+    position: relative;
+    padding-left: 30px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+ul li.list-item-icon i, ul li.list-item-icon svg{
+    position: absolute;
+    line-height: 1;
+    left: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-link:hover{
+    font-weight: 600;
+}
+
+.nav-link.active{
+    font-weight: 600;
+}
+
+.card {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.card:hover:not(.login){
+    box-shadow: 0 .5rem .5rem rgba(73, 72, 72, 0.2);
+    transform: translate(-5px, -5px);
+}
+
+.page-item:not(.disabled){
+    cursor: pointer;
+}
+
+#goTopButton {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in.active {
+    opacity: 1;
+}
+

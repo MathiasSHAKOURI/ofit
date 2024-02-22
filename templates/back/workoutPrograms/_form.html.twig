@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+{% if 'ROLE_COACH' not in app.user.roles %}
+    {{ form_row(form.user)}}
+{% endif %}
+    {{ form_row(form.title)}}
+    {{ form_row(form.picture)}}
+    {{ form_row(form.description)}}
+    {{ form_row(form.workoutCategory)}}
+    {{ form_row(form.publishedAt)}}
+    {{ form_row(form.restBetween)}}
+
+    <p>
+        Ajoutez des exercices à votre programme:
+    </p>
+
+    <ul class="workoutParameters w-50"
+        data-index="{{ form.workoutParameters|length > 0 ? form.workoutParameters|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.workoutParameters.vars.prototype)|e('html_attr') }}">
+        {% for workoutParameter in form.workoutParameters %}
+            <li>
+                {{ form_row(workoutParameter.exercice) }}
+                {{ form_row(workoutParameter.reps, { attr: { class: 'reps-input' } }) }}
+                {{ form_row(workoutParameter.duration, { attr: { class: 'duration-input' } }) }}
+                {{ form_row(workoutParameter.sets) }}
+                {{ form_row(workoutParameter.rest) }}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <script src="{{ asset('js/addFormWorkoutProgram.js') }}"></script>
+
+    <div class="d-flex flex-column w-25">
+        <button type="button" class="add_item_link btn btn-outline-primary bg-gradient mb-2" data-collection-holder-class="workoutParameters">Ajouter un exercice</button>
+    
+        <button class="btn btn-outline-success bg-gradient">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}

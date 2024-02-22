@@ -1,0 +1,31 @@
+{% extends "front/base.html.twig" %}
+{% block title %}Programmes{% endblock %}
+{% block body %}
+    <div class="my-3">
+        <h1 class="text-center">Programmes</h1>
+    </div>
+    <!-- Les filtres -->
+    <form method="GET" action="{{ path('app_search_results_workout') }}" class="mt-4 mb-2 d-flex" id="workoutFilters">
+        <select class="form-select form-select-sm" name="category" id="category">
+            <option selected value="">Catégorie</option>
+            {% for categorie in categories %}
+                <option value="{{ categorie.id }}">{{ categorie.label }}</option>
+            {% endfor %}
+        </select>
+        <select class="form-select form-select-sm mx-2" name="coachId" id="coachId">
+            <option selected value="">Auteur</option>
+            {% for coach in coachs %}
+                <option value="{{ coach.id }}">{{ coach.pseudo }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" class="form-control" id="min" name="min" placeholder="temps minimum en min" min="1">
+        <input type="number" class="form-control mx-2" id="max" name="max" placeholder="temps maximum en min" min="1">
+        <button class="btn btn-danger d-none" type="button" id="resetFilter"><i class="bi bi-x-square-fill"></i></button>
+    </form>
+    <div class="d-none" id="workoutMessage"></div>
+    <div class="row my-3" id="workoutListContainer"></div>
+    <div class="d-flex justify-content-center" id="paginationContainer"></div>
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('js/workoutApi.js') }}"></script>
+{% endblock %}

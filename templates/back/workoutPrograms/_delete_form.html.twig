@@ -1,0 +1,6 @@
+{% if is_granted("WORKOUT_PROGRAM_DELETE",workoutProgram) %}
+    <form method="post" action="{{ path('app_back_workoutProgram_delete', {'id': workoutProgram.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workoutProgram.id) }}">
+        <button class="btn btn-outline-danger bg-gradient">delete</button>
+    </form>
+{% endif %}

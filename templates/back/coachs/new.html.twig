@@ -1,0 +1,13 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}New Coach{% endblock %}
+
+{% block body %}
+    <h1>Create new Coach</h1>
+
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+    {{ include('back/coachs/_form.html.twig') }}
+
+    <a class="btn btn-outline-secondary bg-gradient mt-2" href="{{ path('app_back_coach_index') }}">back to list</a>
+{% endblock %}

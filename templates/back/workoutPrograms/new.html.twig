@@ -1,0 +1,13 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}New Workout{% endblock %}
+
+{% block body %}
+    <h1>Create new Workout</h1>
+
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+    {{ include('back/workoutPrograms/_form.html.twig') }}
+
+    <a href="{{ path('app_back_workoutProgram_index') }}" class="btn btn-outline-secondary bg-gradient mt-2">back to list</a>
+{% endblock %}

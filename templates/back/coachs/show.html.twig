@@ -1,0 +1,56 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Coach{% endblock %}
+
+{% block body %}
+    <h1>Coach</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.roles|join(', ') }}</td>
+            </tr>
+            <tr>
+                <th>Presentation</th>
+                <td>{{ user.presentation }}</td>
+            </tr>
+            <tr>
+                <th>Picture</th>
+                <td>
+                    {% if user.picture %}
+                        <div class="position-relative" style="width: 800px; height: 400px">
+                        <img src="{{ user.picture }}" alt="{{ user.firstname ~ ' ' ~ user.lastname }}" class="position-absolute h-100 top-50 start-50 translate-middle object-fit-cover">
+                        </div>
+                    {% else %}
+                        No picture available
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if not is_granted('ROLE_COACH') %}
+        <a class="btn btn-outline-secondary bg-gradient my-2" href="{{ path('app_back_coach_index') }}">back to list</a>
+    {% endif %}
+    
+    <a class="btn {{ not is_granted('ROLE_COACH') ? 'btn-outline-primary' : 'btn-outline-success' }} bg-gradient" href="{{ not is_granted('ROLE_COACH') ? path('app_back_coach_edit', {'id': user.id}) : path('app_back_my_profile_edit') }}">edit</a>
+
+    {{ include('back/coachs/_delete_form.html.twig') }}
+{% endblock %}

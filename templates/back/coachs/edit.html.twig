@@ -1,0 +1,18 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Edit Coachs{% endblock %}
+
+{% block body %}
+    <h1>Edit Coachs</h1>
+    
+    <p class="text-secondary mb-2 fst-italic">Tous les champs marqués d'un * sont obligatoires</p>
+
+    {{ include('back/coachs/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-outline-secondary bg-gradient my-2" href="{{ path('app_back_' ~ ( is_granted('ROLE_COACH') ? 'my_profile' : 'coach_index')) }}">{{ is_granted('ROLE_COACH') ? 'back to my profile' : 'back to list'}}</a>
+
+    {{ include('back/coachs/_delete_form.html.twig') }}
+
+{% endblock %}
+
+

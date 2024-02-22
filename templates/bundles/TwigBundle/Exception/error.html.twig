@@ -1,0 +1,34 @@
+{% extends 'front/base.html.twig' %}
+
+{% block title %}Erreur {{ status_code }} {% endblock %}
+
+{% block nav %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block body %}
+<div class="d-flex flex-column align-items-center my-5">
+    <h1 class="text-center">Oops! Erreur {{ status_code }}</h1>
+
+    <p class="text-center my-3">
+    Comme dans le sport, parfois, nous ne marquons pas à chaque coup. Mais voici une citation pour vous remotiver :
+    </p>
+
+    <p class="text-center my-3 fw-bold">
+    "Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès. Si vous aimez ce que vous faites, vous réussirez." - Albert Schweitzer
+    </p>
+
+    <p class="text-center my-3">
+    Revenez à la page d'accueil pour explorer davantage le monde du sport, de la santé et de la nutrition ou alors à la page précédente.
+    </p>
+
+    <p class="text-center my-3">
+        <a href="{{ path('app_home') }}" class="btn btn-secondary bg-gradient shadow btn-animated"><i class="fas fa-home"></i> Retour à la page d'accueil</a>
+
+        <a href="javascript:window.history.back();" class="btn btn-warning bg-gradient shadow btn-animated"><i class="fa fa-arrow-left"></i> Retour à la page précédente</a>
+    </p>
+
+    <div class="col-md-6 text-center mt-3">
+        <img src="https://scontent-cdg4-2.xx.fbcdn.net/v/t1.6435-9/107901618_10160770400611840_4313276159571637668_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=uMvKeRNTYoQAX-dxOCq&_nc_ht=scontent-cdg4-2.xx&oh=00_AfBfJPNlvArOX7-d99OhAlVNXBoVbn9o_MAtZIT_CWke4Q&oe=654DDB75" alt="Chat mignon" class="img-fluid">
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,161 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+    App\EventListener\ArticleListener:
+        tags:
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\Article'
+            method: 'slugifyTitle'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\Article'
+            method: 'setCreatedAt'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Article'
+            method: 'setUpdatedAt'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Article'
+            method: 'slugifyTitle'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\Article'
+            method: 'setPicture'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Article'
+            method: 'setPicture'
+    App\EventListener\ExerciceListener:
+        tags:
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\Exercice'
+            method: 'slugifyTitle'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\Exercice'
+            method: 'slugifyTitle'
+    App\EventListener\UserListener:
+        tags:
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\User'
+            method: 'setEmail'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\User'
+            method: 'setEmail'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\User'
+            method: 'setPseudo'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\User'
+            method: 'setPseudo'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preRemove'
+            entity: 'App\Entity\User'
+            method: 'deleteCoach'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\User'
+            method: 'capitalizeNameAndPseudo'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\User'
+            method: 'capitalizeNameAndPseudo'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\User'
+            method: 'setVerified'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\User'
+            method: 'setPicture'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\User'
+            method: 'setPicture'
+    App\EventListener\WorkoutProgramListener:
+        tags:
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'slugifyTitle'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setCreatedAt'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setUpdatedAt'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'slugifyTitle'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setDuration'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setDuration'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'prePersist'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setPicture'
+        -
+            name: 'doctrine.orm.entity_listener'
+            event: 'preUpdate'
+            entity: 'App\Entity\WorkoutProgram'
+            method: 'setPicture'
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

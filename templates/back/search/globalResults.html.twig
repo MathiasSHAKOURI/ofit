@@ -1,0 +1,166 @@
+{% extends "back/base.html.twig" %}
+{% block title %}Résultat de la recherche{% endblock %}
+{% block body %}
+    <h1 class="mx-auto text-center">Résultat de la recherche pour : {{ userInput }}</h1>
+
+    <!-- Resultats pour les articles -->
+    {% if articles is not empty %}
+        <div class="mt-2">
+            <h2>Les articles :</h2>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>User</th>
+                                <th>Category</th>
+                                <th>Content</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th>Published at</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {% for article in articles %}
+                        <tr>
+                        <td>{{ article.title }}</td>
+                        <th>{{ article.user ? article.user.firstname ~ ' ' ~ article.user.lastname : "Un Coach" }}</th>
+                        <th>{{ article.articleCategory.label }}</th>
+                        <td>{{ article.content|slice(0,100) }}...</td>
+                        <td>{{ article.createdAt|date('d-m-Y') }}</td>
+                        <td>{{ article.updatedAt ? article.updatedAt|date('d-m-Y') : 'N/A' }}</td>
+                        <td>{{ article.publishedAt|date('d-m-Y') }}</td>
+                        <td>
+                            <a href="{{ path('app_back_article_edit', {'id': article.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            <a href="{{ path('app_back_article_show', {'id': article.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/articles/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les coachs -->
+    {% if coachs is not empty %}
+        <div class="mt-2">
+            <h2>Les coachs :</h2>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Pseudo</th>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {% for user in coachs %}
+                            <tr>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.pseudo }}</td>
+                                <td>{{ user.firstname }}</td>
+                                <td>{{ user.lastname }}</td>
+                                <td>
+                                    <a href="{{ path('app_back_coach_edit', {'id': user.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                                    <a href="{{ path('app_back_coach_show', {'id': user.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                                    {{ include('back/coachs/_delete_form.html.twig') }}
+                                </td>                            
+
+                            </tr>
+                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les exercices -->
+    {% if exercices is not empty %}
+        <div class="mt-2">
+            <h2>Les exercices :</h2>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Groupe musculaire</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {% for exercice in exercices %}
+                        <tr>
+                        <td>{{ exercice.title }}</td>
+                        <td>{{ exercice.description|slice(0,100) }}...</td>
+                        <td>{{ exercice.muscularGroup.label }}</td>
+                        <td>
+                            <a href="{{ path('app_back_exercice_edit', {'id': exercice.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            <a href="{{ path('app_back_exercice_show', {'id': exercice.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/exercices/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Resultats pour les programmes -->
+    {% if workouts is not empty %}
+        <div class="mt-2">
+            <h2>Les programmes :</h2>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                            <th>Published at</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                {% for workoutProgram in workouts %}
+                    <tr>
+                        <td>{{ workoutProgram.title }}</td>
+                        <td>{{ workoutProgram.user ? workoutProgram.user.firstname ~ ' ' ~ workoutProgram.user.lastname : "Un Coach" }}</td>
+                        <td>{{ workoutProgram.workoutCategory.label }}</td>
+                        <td>{{ workoutProgram.description|slice(0,100) }}...</td>
+                        <td>{{ workoutProgram.createdAt|date('d-m-Y') }}</td>
+                        <td>{{ workoutProgram.updatedAt ? workoutProgram.updatedAt|date('d-m-Y') : 'N/A' }}</td>
+                        <td>{{ workoutProgram.publishedAt|date('d-m-Y') }}</td>
+                        <td>
+                            <a href="{{ path('app_back_workoutProgram_edit', {'id': workoutProgram.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            <a href="{{ path('app_back_workoutProgram_show', {'id': workoutProgram.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/workoutPrograms/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+

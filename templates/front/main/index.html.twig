@@ -1,0 +1,179 @@
+{% extends "front/base.html.twig" %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+{% set carouselTimmer = 4000 %}
+
+    <!-- carroussel -->
+    <div id="homecarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#homecarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#homecarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#homecarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded" style="max-height: 500px">
+            <div class="carousel-item active"  data-bs-interval="{{ carouselTimmer }}">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-bs-interval="{{ carouselTimmer }}">
+                <img src="https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item" data-bs-interval="{{ carouselTimmer }}">
+                <img src="https://images.unsplash.com/photo-1514994444123-10094655bdb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#homecarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homecarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="text-center mt-3">
+        <h1>O'Fit</h1>
+        <span>From Bouddha to Appolon</span>
+    </div>
+    <!-- Le dernier article -->
+    <div class="my-4 articles fade-in">
+        <h2 class="my-4">Les derniers articles</h2>
+        <div class="row">
+            {% for article in lastarticle %}
+            <div class="col-xl-6 mb-4">
+                <div class="card" style="min-height: 100%;">
+                    <a href="{{ path('app_article_show', {id:article.id,slug:article.slug }) }}" class="text-reset text-decoration-none">
+                        <img src="{{ article.picture }}" class="card-img-top object-fit-cover" alt="Illustration article {{ article.title }}" style="max-height: 595px;">
+                    </a>
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <a class="btn btn-success" href="{{ path('app_' ~ article.articleCategory.label|lower ~ '_article') }}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">{{ article.articleCategory.label }}</a>
+                        </div>
+                        <p class="justify mt-2">{{ article.content[:600] }} ...</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="d-flex col-8">
+                            <i class="bi bi-person-circle fs-2"></i>
+                                {% if article.user is null %}
+                                    <p class="card-text my-auto mx-2">Par : Un coach</p>                                        
+                                {% else %}
+                                    <p class="card-text my-auto mx-2">Par : {{ article.user.pseudo }}</p>                                        
+                                {% endif %}
+                        </div>
+                        <a href="{{ path('app_article_show', {id:article.id,slug:article.slug }) }}" class="btn btn-primary">Lire la suite</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Les derniers articles -->
+            <div class="col-xl-6">
+                <div class="row">
+                    {% for article in articles %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card rounded mx-2" style="min-height: 485px;">
+                                <a href="{{ path('app_article_show', {id:article.id,slug:article.slug }) }}" class="text-reset text-decoration-none position-relative" style="height: 320px;">
+                                    <img src="{{ article.picture }}" class="card-img-top object-fit-cover h-100 position-absolute top-50 start-50 translate-middle" alt="Illustration article {{ article.title }}">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title ellipsis-2">{{ article.title }}</h5>
+                                    <a class="btn btn-success btn-sm" href="{{ path('app_' ~ article.articleCategory.label|lower ~ '_article') }}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">{{ article.articleCategory.label }}</a>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <i class="bi bi-person-circle"></i>
+                                        {% if article.user is null %}
+                                        <p class="card-text my-auto mx-2">Par : Un coach</p>                                        
+                                        {% else %}
+                                        <p class="card-text my-auto mx-2">Par : {{ article.user.pseudo }}</p>                                        
+                                        {% endif %}
+                                    </div>
+                                    <a class="text-reset" href="{{ path('app_article_show', {id:article.id,slug:article.slug }) }}"><i class="fa-solid fa-up-right-from-square "></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Notre histoire -->
+    <div class="my-4 histoire fade-in">
+        <h2>Notre histoire</h2>
+        <div class="row">
+            <div class="col-lg-6 mt-3">
+                <div class="shadow rounded overflow-hidden" style="max-height: 600px">
+                    <img class="img-fluid" src="https://images.unsplash.com/photo-1559166631-ef208440c75a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80" class="card-img-top" alt="Illustartion de notre histoire">
+                </div>
+            </div>
+            <div class="col-lg-6 mt-3 justify">
+                <p>
+                    Il était une fois, dans une salle de classe entre les manuels épais et les machines à café en panne, trois étudiants en développement web : Mathias, Adrien et Armand. Au milieu d'une journée ensoleillée à l'université, ils ont eu une révélation commune : créer "Ofit", un site sur le sport, la santé et la nutrition. C'était le début d'une aventure pétillante.
+                </p>
+                <p>
+                    Vous vous demandez probablement qui étaient ces génies excentriques à l'origine d'un site de sport, de santé et de nutrition. Eh bien, imaginez trois personnes aux talents variés mais complémentaires. Il y avait Adrien, le cerveau du groupe, qui pouvait coder en Javascript pendant des heures, tout en devisant sur les bienfaits de la méditation transcendantale. Puis il y avait Armand, le roi des réseaux sociaux, qui pouvait créer un hashtag viral plus vite que vous ne pouvez dire "barre protéinée". Enfin, il y avait Mathias, l'athlète en herbe, qui aurait pu soulever un serveur à lui seul si cela avait été nécessaire. Ensemble, ils étaient les trois mousquetaires du monde du développement web.
+                </p>
+                <p>
+                    Ces trois amis avaient des compétences variées, de la programmation au marketing, en passant par l'athlétisme. Ensemble, ils ont fusionné leurs talents pour donner vie à "Ofit". Le nom lui-même, mélange d'Online, Fitness et It's amazing, est né d'un débat hilarant. Avec acharnement et humour, ils ont construit leur site, prêts à partager leur passion pour le sport et la santé avec le monde. Et ainsi, "Ofit" était né, une aventure d'ambition, de créativité et de rires. Qui sait quel génie vous attend dans votre prochaine révélation brillante ?
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Les derniers programmes -->
+    <div class="my-4 programmes fade-in">
+        <h2 class="my-4">Les derniers programmes</h2>
+        <div class="rounded row mx-0">
+            {% for program in programs %}
+                <div class="col-xl-4 col-md-6">
+                    <div class="card my-3">
+                        <a href="{{ path('app_workout_show', {id:program.id,slug:program.slug }) }}" class="text-reset text-decoration-none">
+                            <div class="row g-0">
+                                <div class="col-lg-4 position-relative">
+                                    <img src="{{ program.picture }}" class="card-img object-fit-cover h-100 position-absolute top-50 start-50 translate-middle" alt="image du programme {{ program.title }}" style="object-fit: cover;">
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="card-body" style="height: 230px;">
+                                        <h5 class="card-title ellipsis-2 mb-3" data-bs-toggle="tooltip" data-bs-title="{{ program.title }}">{{ program.title }}</h5>
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="list-item-icon">
+                                                <i class="fa-solid fa-dumbbell"></i>{{ program.workoutParameters | length }} exercices
+                                            </li>
+                                            <li class="list-item-icon">
+                                                <i class="fa-regular fa-clock"></i>{{ program.duration }} min
+                                            </li>
+                                            <li class="list-item-icon">
+                                                <i class="bi bi-person-circle"></i>
+                                                {% if program.user is null %}
+                                                    Par : Un coach                                       
+                                                {% else %}
+                                                    Par : {{ program.user.pseudo }}                                       
+                                                {% endif %}
+                                            </li>
+                                            <li class="list-item-icon">
+                                                <i class="bi bi-calendar-week"></i>Le {{ program.publishedAt|date('d/m/Y') }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Les coachs -->
+    <div class="my-4 coachs fade-in">
+        <h2 class="my-4">Les coachs</h2>
+        <div class="row mx-0">
+            {% for coach in coachs %}
+                <div class="col-md-6 col-xl-3">
+                {% include "front/partials/_coachCard.html.twig" %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>   
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('js/home.js') }}"></script>
+{% endblock %}

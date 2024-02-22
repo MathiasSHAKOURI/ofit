@@ -1,0 +1,26 @@
+{% extends "front/base.html.twig" %}
+{% block title %}{{ exercice.title }}{% endblock %}
+{% block body %}
+    <div class="d-flex align-items-center">
+        <a class="d-none d-lg-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+        <h1 class="mx-auto">{{ exercice.title }}</h1>
+    </div>
+    <a class="d-lg-none d-block" href="{{ app.request.headers.get('referer') }}"><i class="bi bi-arrow-left-square-fill fs-2"></i></a>
+    <div class="text-end">
+        <span class="badge rounded-pill text-bg-success mb-4">{{ exercice.muscularGroup.label }}</span>
+    </div>
+    <!-- Affichage float sur ecran taille a partir de lg et plus -->
+    <div class="clearfix d-none d-lg-block">
+        <div class="float-lg-start me-4 mb-3" style="max-width: 45%;">
+            <img src="{{ exercice.picture }}" alt="Illustration de {{ exercice.title }}" class="object-fit-cover w-100 rounded" style="max-height: 700px">
+        </div>
+        <p class="justify">{{ exercice.description }}</p>
+    </div>
+    <!-- Affichage colonne sur ecran taille en dessous de lg -->
+    <div class="d-lg-none d-block">
+        <div class="mx-auto mb-3" style="max-width: 100%;">
+            <img src="{{ exercice.picture }}" alt="Illustration de {{ exercice.title }}" class="object-fit-cover w-100 rounded" style="max-height: 700px">
+        </div>
+        <p class="justify">{{ exercice.description }}</p>
+    </div>
+{% endblock %}

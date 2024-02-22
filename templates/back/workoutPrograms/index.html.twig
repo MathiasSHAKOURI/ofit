@@ -1,0 +1,60 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Workout Programmes{% endblock %}
+
+{% block body %}
+    <h1>Workout Programmes</h1>
+    <a href="{{ path('app_back_workoutProgram_new') }}" class="btn btn-outline-secondary bg-gradient mb-2">Create new</a>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <a href="{{ path('app_back_workoutProgram_index') }}" class="btn btn-outline-success bg-gradient mr-2 mb-2 {{ app.request.attributes.get('category') is null ? 'active' : '' }}">Tous les Programmes</a>
+            {% for workoutCategory in workoutCategories %}
+                <a href="{{ path('app_back_workoutProgram_index_category', {'category':workoutCategory.label|lower }) }}" class="btn btn-outline-primary bg-gradient mr-2 mb-2 {{ app.request.attributes.get('category') == workoutCategory.label|lower ? 'active' : '' }}">{{ workoutCategory.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>User</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                    <th>Published at</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for workoutProgram in workoutPrograms %}
+                    <tr>
+                        <td>{{ workoutProgram.title }}</td>
+                        <td>{{ workoutProgram.user ? workoutProgram.user.firstname ~ ' ' ~ workoutProgram.user.lastname : "Un Coach" }}</td>
+                        <td>{{ workoutProgram.workoutCategory.label }}</td>
+                        <td>{{ workoutProgram.description|slice(0,100) }}...</td>
+                        <td>{{ workoutProgram.createdAt|date('d-m-Y') }}</td>
+                        <td>{{ workoutProgram.updatedAt ? workoutProgram.updatedAt|date('d-m-Y') : 'N/A' }}</td>
+                        <td>{{ workoutProgram.publishedAt|date('d-m-Y') }}</td>
+                        <td>
+                            {% if is_granted("WORKOUT_PROGRAM_EDIT",workoutProgram) %}
+                                <a href="{{ path('app_back_workoutProgram_edit', {'id': workoutProgram.id}) }}" class="btn btn-outline-primary bg-gradient mb-2">edit</a>
+                            {% endif %}
+                            <a href="{{ path('app_back_workoutProgram_show', {'id': workoutProgram.id}) }}" class="btn btn-outline-warning bg-gradient mb-2">show</a>
+                            {{ include('back/workoutPrograms/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
