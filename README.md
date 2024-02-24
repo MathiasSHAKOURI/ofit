@@ -25,8 +25,8 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants sur v
 ### Installation
 
 - Cloner le répo
-- Mettre à jour l'URL de la data base `DATABASE_URL` dans le fichier `.env.local`
-- Mettre à jour le mailer `MAILER_DSN` dans le fichier `.env.local`
+- Ajouter l'URL de la data base `DATABASE_URL` dans le fichier `.env.local` et le remplir avec vos informations
+- Ajouter le mailer `MAILER_DSN` dans le fichier `.env.local` et le remplir avec vos informations
 - `composer install`
 - `php bin/console doctrine:database:create`
 - Importer le fichier `public/sql/ofit.sql`
